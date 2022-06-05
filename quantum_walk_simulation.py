@@ -1,5 +1,6 @@
 import numpy as np
 from qiskit import QuantumCircuit, transpile
+from qiskit.circuit.library.standard_gates import RXGate
 from qiskit.extensions.unitary import UnitaryGate
 from qiskit.quantum_info.operators import Operator
 
@@ -9,7 +10,8 @@ def staggered_dsg_circuit_3t(
     t: float = 1.,
     layers: int = 1,
     decompose: bool = False,
-    linear_operation: bool = False
+    linear_operation: bool = False,
+    model: str = 'Heisenberg'
 ) -> QuantumCircuit:
     """
     Given size, time t, and the number of steps n, constructs the corresponding staggered quantum walk circuit on DSG.
@@ -28,13 +30,22 @@ def staggered_dsg_circuit_3t(
     theta = np.pi*t/layers
     zeta = complex(np.cos(-2*theta), np.sin(-2*theta))
     
-    interaction = UnitaryGate(
-        Operator([
-        [1, 0, 0, 0],
-        [0, (zeta+1)/2, (-1*zeta+1)/2, 0],
-        [0, (-1*zeta+1)/2, (zeta+1)/2, 0],
-        [0, 0, 0, 1]])
-    )
+    if model == 'tight-binding':
+        interaction = UnitaryGate(Operator([
+            [1, 0, 0, 0],
+            [0, np.cos(theta), complex(0, -np.sin(theta)), 0],
+            [0, complex(0, -np.sin(theta)), np.cos(theta), 0],
+            [0, 0, 0, 1]])
+        )
+    elif model == 'Heisenberg':
+        interaction = UnitaryGate(Operator([
+            [1, 0, 0, 0],
+            [0, (zeta+1)/2, (-1*zeta+1)/2, 0],
+            [0, (-1*zeta+1)/2, (zeta+1)/2, 0],
+            [0, 0, 0, 1]])
+        )
+    else:
+        raise NotImplementedError()
 
     def interaction_2(size, interaction, qubits, name=None, decompose=False):
         qc = QuantumCircuit(size)
@@ -117,7 +128,8 @@ def staggered_dsg_circuit_log3t(
     t: float = 1.,
     layers: int = 1,
     wrap: bool = False,
-    barrier: bool = False
+    barrier: bool = False,
+    model: str = 'Heisenberg'
 ) -> QuantumCircuit:
     """
     Given size, time t, and the number of steps n, constructs the corresponding log size staggered quantum walk circuit on DSG.
@@ -135,12 +147,19 @@ def staggered_dsg_circuit_log3t(
     theta = np.pi*t/layers
     zeta = complex(np.cos(-2*theta), np.sin(-2*theta))
     
-    interaction = UnitaryGate(
-        Operator([
-        [(zeta+1)/2, (-1*zeta+1)/2],
-        [(-1*zeta+1)/2, (zeta+1)/2]]),
-        label='U'
-    ).control()
+    if model == 'tight-binding':
+        interaction = RXGate(2*theta)
+    elif model == 'Heisenberg':
+        interaction = UnitaryGate(
+            Operator([
+            [(zeta+1)/2, (-1*zeta+1)/2],
+            [(-1*zeta+1)/2, (zeta+1)/2]]),
+            label='U'
+        )
+    else:
+        raise NotImplementedError()
+    
+    interaction = interaction.control()
     
     def tessellation1(size, interaction):
         """Staggered Quantum Walks tessellation 1"""
