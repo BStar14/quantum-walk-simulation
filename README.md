@@ -3,6 +3,27 @@
 ## Abstract
 Quantum walks play a crucial role in both physics modeling and computation algorithms. In this work, we present strategies to implement quantum walks on near-term quantum devices. We demonstrate that the staggered quantum walk model provides efficient Trotter-Suzuki decomposition in quantum walks simulation. We then state and compare two different encoding methods: qubit mapping and state mapping, thus showing how two encodings have different properties. Those strategies can be applied to any continuous-time quantum walks on a network, thus providing a standard methodology for quantum walks implementation.
 
+## Simulations
+### Comparison of random walks and quantum walks
+
+https://user-images.githubusercontent.com/78784216/171912473-e310a429-6e7f-4d36-a126-cf61cb657381.mp4
+
+https://user-images.githubusercontent.com/78784216/171912516-cc740394-9b08-4631-a8ba-32d9d5cb3512.mp4
+
+### Comparison of quantum walks on triangular networks and fractal networks
+
+https://user-images.githubusercontent.com/78784216/171912721-700ff204-345c-4220-96cc-7bac6bc81acb.mp4
+
+### Comparison of quantum walk simulation with different Trotter steps
+
+It seems that the videos are shuffled... (1-layer <-> 5-layer)
+
+https://user-images.githubusercontent.com/78784216/171912891-c4afca70-4b21-42bc-91de-36f28a340571.mp4
+
+### Comparison of simulator results and qpu results (IBMQ Mumbai)
+
+https://user-images.githubusercontent.com/78784216/171913080-e5a1a598-1a56-4c11-a825-7f253aea428e.mp4
+
 ## Reference
 1. X.-Y. Xu, X.-W. Wang, D.-Y. Chen, C. M. Smith, X.-M. Jin, Quantum transport in fractal networks, Nature Photonics 15 (9) (2021) 703-710. doi:10.1038/s41566-021-00845-4.
 2. J. Kempe, Quantum random walks: An introductory overview, Contemporary Physics 44 (4) (2003) 307-327. arXiv:quant-ph/0303081, doi:10.1080/00107151031000110776.
