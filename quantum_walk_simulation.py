@@ -30,7 +30,7 @@ def staggered_dsg_circuit_3t(
     theta = np.pi*t/layers
     zeta = complex(np.cos(-2*theta), np.sin(-2*theta))
     
-    if model == 'tight-binding':
+    if model == 'XY':
         interaction = UnitaryGate(Operator([
             [1, 0, 0, 0],
             [0, np.cos(theta), complex(0, -np.sin(theta)), 0],
@@ -147,7 +147,7 @@ def staggered_dsg_circuit_log3t(
     theta = np.pi*t/layers
     zeta = complex(np.cos(-2*theta), np.sin(-2*theta))
     
-    if model == 'tight-binding':
+    if model == 'XY':
         interaction = RXGate(2*theta)
     elif model == 'Heisenberg':
         interaction = UnitaryGate(
@@ -284,5 +284,5 @@ def staggered_dsg_circuit_log3t(
         
     for i in range(size):
         simulation.measure(i, i)
-       
+    
     return simulation
