@@ -1,28 +1,24 @@
 # Implementation of Quantum Walks on NISQ devices
 
 ## Abstract
-Quantum walks play a crucial role in both physics modeling and computation algorithms. In this work, we present strategies to implement quantum walks on near-term quantum devices. We demonstrate that the staggered quantum walk model provides efficient Trotter-Suzuki decomposition in quantum walks simulation. We then state and compare two different encoding methods: qubit mapping and state mapping, thus showing how two encodings have different properties. Those strategies can be applied to any continuous-time quantum walks on a network, thus providing a standard methodology for quantum walks implementation.
+Quantum walks provide useful implications in building quantum algorithms and simulating complex physical systems. In this work, we suggest a general strategy to implement continuous-time quantum walks on a graph with _n_ vertices on quantum computers with _O_(log _n_) number of qubits via binary encoding of vertices and circuit-based hopping operations. We investigate our results by numerical simulations in various examples. We then compare this binary encoding with typical unary encoding, addressing correspondence, difference, and resource requirements.
 
 ## Simulations
 ### Comparison of random walks and quantum walks
 
 https://user-images.githubusercontent.com/78784216/171912473-e310a429-6e7f-4d36-a126-cf61cb657381.mp4
 
-https://user-images.githubusercontent.com/78784216/171912516-cc740394-9b08-4631-a8ba-32d9d5cb3512.mp4
-
 ### Comparison of quantum walks on triangular networks and fractal networks
 
-https://user-images.githubusercontent.com/78784216/171912721-700ff204-345c-4220-96cc-7bac6bc81acb.mp4
+https://user-images.githubusercontent.com/78784216/173179964-9aca36ec-47ce-4cc7-8f7a-57097344b3a4.mp4
 
 ### Comparison of quantum walk simulation with different Trotter steps
 
-It seems that the videos are shuffled... (1-layer <-> 5-layer)
-
-https://user-images.githubusercontent.com/78784216/171912891-c4afca70-4b21-42bc-91de-36f28a340571.mp4
+https://user-images.githubusercontent.com/78784216/173179970-8d2fc29e-56c2-4a0b-921a-4f70aeb1e0cc.mp4
 
 ### Comparison of simulator results and qpu results (IBMQ Mumbai)
 
-https://user-images.githubusercontent.com/78784216/171913080-e5a1a598-1a56-4c11-a825-7f253aea428e.mp4
+https://user-images.githubusercontent.com/78784216/173179979-844dc690-03c0-410b-baba-8d5e41ed6dd5.mp4
 
 ## Reference
 1. X.-Y. Xu, X.-W. Wang, D.-Y. Chen, C. M. Smith, X.-M. Jin, Quantum transport in fractal networks, Nature Photonics 15 (9) (2021) 703-710. doi:10.1038/s41566-021-00845-4.
