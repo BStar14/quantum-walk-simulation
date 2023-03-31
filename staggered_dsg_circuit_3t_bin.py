@@ -62,7 +62,7 @@ def staggered_dsg_circuit_3t_bin(
         tessel1.append(interaction, [3,0])
         tessel1.x(3)
         
-        tessel1.name = 'tessel_1'
+        tessel1.name = 'Tessel-1'
         
         return tessel1
     
@@ -85,7 +85,7 @@ def staggered_dsg_circuit_3t_bin(
         tessel2.append(interaction, [3,2])
         tessel2.x(3)
         
-        tessel2.name = 'tessel_2'
+        tessel2.name = 'Tessel-2'
         
         return tessel2
     
@@ -117,7 +117,7 @@ def staggered_dsg_circuit_3t_bin(
         tessel3.append(interaction, [3,0])
         tessel3.x(3)
         
-        tessel3.name = 'tessel_3'
+        tessel3.name = 'Tessel-3'
         
         return tessel3
     
@@ -146,7 +146,7 @@ def staggered_dsg_circuit_3t_bin(
         
         back.mct([0,1], 2)
         
-        back.name = 'permute_back'
+        back.name = 'Permute-back'
         
         return back
     

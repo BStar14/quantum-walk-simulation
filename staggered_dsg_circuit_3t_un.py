@@ -3,12 +3,12 @@ from qiskit import QuantumCircuit, transpile
 from qiskit.extensions.unitary import UnitaryGate
 from qiskit.quantum_info.operators import Operator
 
-
 def staggered_dsg_circuit_3t_un(
     size_degree: int = 2,
     t: float = 1.,
     layers: int = 1,
-    decompose: bool = False,
+    wrap: bool = True,
+    barrier: bool = False,
     linear_operation: bool = False,
     model: str = 'Heisenberg'
 ) -> QuantumCircuit:
@@ -46,11 +46,11 @@ def staggered_dsg_circuit_3t_un(
     else:
         raise NotImplementedError()
 
-    def interaction_2(size, interaction, qubits, name=None, decompose=False):
+    def interaction_2(size, interaction, qubits, name=None, wrap=True):
         if name!=None: interaction.name = name
         qc = QuantumCircuit(size)
         qc.append(interaction, qubits)
-        if decompose: qc = transpile(qc, basis_gates=['u', 'cx'], optimization_level=2)
+        if not wrap: qc = transpile(qc, basis_gates=['u', 'cx'], optimization_level=2)
         return qc
 
     simulation = QuantumCircuit(size, size)
@@ -59,63 +59,67 @@ def staggered_dsg_circuit_3t_un(
 
     for i in range(layers):
         
-        simulation.barrier()
+        if barrier: simulation.barrier()
         
         # Staggered Quantum Walks tessellation 1
         for j in node_list[::3]:
             a = int(j+(j//3)%3)
             b = int(j+(j//3+1)%3)
             simulation.compose(
-                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-1', decompose),
+                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-1', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
         for j in node_list[7::9]:
             simulation.compose(
-                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-1', decompose),
+                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-1', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
+        
+        if barrier: simulation.barrier()
         
         # Staggered Quantum Walks tessellation 2
         for j in node_list[::3]:
             a = int(j+(j//3+2)%3)
             b = int(j+(j//3)%3)
             simulation.compose(
-                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-2', decompose),
+                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-2', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
         for j in node_list[1::9]:
             simulation.compose(
-                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-2', decompose),
+                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-2', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
+        
+        if barrier: simulation.barrier()
         
         # Staggered Quantum Walks tessellation 3
         for j in node_list[::3]:
             a = int(j+(j//3+1)%3)
             b = int(j+(j//3+2)%3)
             simulation.compose(
-                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-3', decompose),
+                interaction_2(size, interaction, [node_list[a], node_list[b]], 'Tessel-3', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
         for j in node_list[4::9]:
             simulation.compose(
-                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-3', decompose),
+                interaction_2(size, interaction, [j, node_list[j-5]], 'Tessel-3', wrap),
                 range(size),
                 inplace=True
                 )
             if linear_operation: simulation.barrier()
-
-    if not linear_operation: simulation.barrier()
+    
+    if barrier: simulation.barrier()
     
     for i in node_list:
         simulation.measure(i, i)

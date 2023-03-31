@@ -7,9 +7,3 @@ __pycache__/
 ### JupyterNotebooks ###
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
-
-# svg image files
-*.svg
-
-# backup folder
-backup/
